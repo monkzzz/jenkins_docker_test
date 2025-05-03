@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t docker_image/webapp:$BUILD_NUMBER .'
+                sh 'docker build -t monkzz/test_repo:$BUILD_NUMBER .'
             }
         }
         stage('Login to Docker Hub') {
@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Push Image') {
             steps {
-                sh 'docker push docker_image/webapp:$BUILD_NUMBER'
+                sh 'docker push monkzz/test_repo:$BUILD_NUMBER'
             }
         }
     }
