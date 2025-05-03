@@ -25,5 +25,13 @@ pipeline {
                 sh 'docker push monkzz/test_repo:$BUILD_NUMBER'
             }
         }
+        stage('Deploy Application') {
+            steps{
+                sh '''
+                docker stop webapp_ctr
+                docker run --rm -d -p 3000:3000 --name webapp_ctr monkzz/test_repo:${BUILD_NUMBER}
+                '''
+            }
+        }
     }
 }
