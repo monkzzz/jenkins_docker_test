@@ -20,5 +20,10 @@ pipeline {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
+        stage('Push Image') {
+            steps {
+                sh 'docker push **devopscloudbootcamp**/webapp:$BUILD_NUMBER'
+            }
+        }
     }
 }
