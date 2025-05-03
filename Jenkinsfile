@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t **devopscloudbootcamp**/webapp:$BUILD_NUMBER .'
+                sh 'docker build -t docker_image/webapp:$BUILD_NUMBER .'
             }
         }
     }
