@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Push Image') {
             steps {
-                sh 'docker push **devopscloudbootcamp**/webapp:$BUILD_NUMBER'
+                sh 'docker push docker_image/webapp:$BUILD_NUMBER'
             }
         }
     }
