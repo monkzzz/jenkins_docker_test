@@ -10,6 +10,14 @@ pipeline {
                git branch: 'main', credentialsId: 'f8aa600a-341d-48d9-a579-d8774b5da13d', url: 'https://github.com/monkzzz/jenkins_docker_test'
             }
         }
+        stage('Clear old Images/Containers') {
+             steps {
+                sh '''
+                docker container prune -f
+                docker image prune -a -f
+                '''
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t monkzz/test_repo:$BUILD_NUMBER .'
