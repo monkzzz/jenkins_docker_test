@@ -36,7 +36,7 @@ pipeline {
         stage('Deploy Application') {
             steps{
                 sh '''
-                docker stop $(docker ps -a -q)
+                docker stop $(docker ps -a -q) || true
                 docker run --rm -d -p 3000:3000 --name webapp_ctr monkzz/test_repo:${BUILD_NUMBER}
                 '''
             }
