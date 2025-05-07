@@ -12,11 +12,7 @@ pipeline {
         }
         stage('Check coompiler versions') {
              steps {
-                 sh '''
-                 python3 –V
-                 gcc --version
-                 g++ --version
-                 '''
+                 sh 'python3 hello.py'
             }
         }
         stage('Clear old Images/Containers') {
