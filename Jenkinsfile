@@ -13,7 +13,7 @@ pipeline {
         stage('Check coompiler versions') {
              steps {
                  sh '''
-                 python3 –version
+                 python3 –-version
                  gcc --version
                  g++ --version
                  '''
