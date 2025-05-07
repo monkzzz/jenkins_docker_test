@@ -10,6 +10,15 @@ pipeline {
                git branch: 'main', credentialsId: 'f8aa600a-341d-48d9-a579-d8774b5da13d', url: 'https://github.com/monkzzz/jenkins_docker_test'
             }
         }
+        stage('Check coompiler versions') {
+             steps {
+                 sh '''
+                 python3 –version
+                 gcc --version
+                 g++ --version
+                 '''
+            }
+        }
         stage('Clear old Images/Containers') {
              steps {
                 sh '''
