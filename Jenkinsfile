@@ -1,15 +1,61 @@
 pipeline {
     agent { label 'ubuntu' }
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('jenkins')
+        GIT_MAIN_BRANCH = 'main'
+    }
+    options {
+        ansiColor('xterm')
     }
 
     stages {
+        // Retrieve the project code from the repository.
         stage('SCM Checkout') {
             steps {
                git branch: 'main', credentialsId: 'f8aa600a-341d-48d9-a579-d8774b5da13d', url: 'https://github.com/monkzzz/jenkins_docker_test'
             }
         }
+        // Prepare and build the Docker Image
+        stage('Prepare') {
+            steps {
+                script {
+                    //Build the Docker Image
+                    sh 'docker build -t monkzz/test_repo:$BUILD_NUMBER .'
+
+                    //Create the container
+                    
+                }
+            }
+        }
+        // Run tests
+        stage('Test') {
+            steps {
+                script {
+                    // Start Docker
+                    sh "docker run
+                }
+            }
+         }
+        // Evaluate
+        stage('Evaluate') {
+            steps {
+                script {
+                }
+            }
+         }
+        // Release
+        stage('Release') {
+            steps {
+                script {
+                }
+            }
+         }
+         // Deploy
+        stage('Deploy') {
+            steps {
+                script {
+                }
+            }
+         }        
         stage('Compile C') {
              steps {
                  sh 'gcc -o hello_c hello.c'
@@ -33,37 +79,6 @@ pipeline {
         stage('Run Python 3.10') {
              steps {
                  sh 'python3 hello.py'
-            }
-        }
-        stage('Clear old Images/Containers') {
-             steps {
-                sh '''
-                docker container prune -f
-                docker image prune -a -f
-                '''
-            }
-        }
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t monkzz/test_repo:$BUILD_NUMBER .'
-            }
-        }
-        stage('Login to Docker Hub') {
-            steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-            }
-        }
-        stage('Push Image') {
-            steps {
-                sh 'docker push monkzz/test_repo:$BUILD_NUMBER'
-            }
-        }
-        stage('Deploy Application') {
-            steps{
-                sh '''
-                docker stop $(docker ps -a -q) || true
-                docker run --rm -d -p 3000:3000 --name webapp_ctr monkzz/test_repo:${BUILD_NUMBER}
-                '''
             }
         }
     }
