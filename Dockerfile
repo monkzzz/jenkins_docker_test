@@ -1,6 +1,16 @@
-FROM python:2.7
-WORKDIR /html
-COPY index.html .
-COPY styles.css .
-EXPOSE 3000
-CMD python -m SimpleHTTPServer 3000
+FROM python:3.10
+WORKDIR /usr/src
+# Start Commands
+RUN apt-get update \
+    && apt-get install -y git build-essential \
+    && /usr/local/bin/python -m pip install --upgrade pip
+
+# Copy the files
+COPY hello.c .
+COPY hello.cpp .
+COPY hello.py .
+
+# Install Commands
+RUN pip install -r requirements.txt
+
+# Last Commands
