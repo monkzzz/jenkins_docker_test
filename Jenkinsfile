@@ -3,10 +3,6 @@ pipeline {
     environment {
         GIT_MAIN_BRANCH = 'main'
     }
-    options {
-        ansiColor('xterm')
-    }
-
     stages {
         // Retrieve the project code from the repository.
         stage('SCM Checkout') {
