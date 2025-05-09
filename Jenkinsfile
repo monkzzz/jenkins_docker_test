@@ -35,27 +35,6 @@ pipeline {
                 }
             }
          }
-        // Evaluate
-        stage('Evaluate') {
-            steps {
-                script {
-                }
-            }
-         }
-        // Release
-        stage('Release') {
-            steps {
-                script {
-                }
-            }
-         }
-         // Deploy
-        stage('Deploy') {
-            steps {
-                script {
-                }
-            }
-         }        
         stage('Compile C') {
              steps {
                  sh 'gcc -o hello_c hello.c'
