@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     // Start Docker
-                    sh "docker run
+                    sh 'docker run monkzz/test_repo:${BUILD_NUMBER}'
                 }
             }
          }
