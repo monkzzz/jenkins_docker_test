@@ -13,8 +13,9 @@ pipeline {
         // Prepare and build the Docker Image
         stage('Prepare') {
             steps {
+                script {
                     //Build the Docker Image
-                    def customImage = docker.build('monkzz/test_repo:$BUILD_NUMBER'}
+                    sh 'docker build -t monkzz/test_repo:$BUILD_NUMBER .'
 
                     //Create the container
                     
@@ -26,43 +27,33 @@ pipeline {
             steps {
                 script {
                     // Start Docker
-                    sh 'docker run customImage'
+                    sh 'docker run monkzz/test_repo:${BUILD_NUMBER}'
                 }
             }
          }
         stage('Compile C') {
              steps {
-                 customImage.inside {
-                     sh 'gcc -o hello_c hello.c'
-                 }
+                 sh 'gcc -o hello_c hello.c'
             }
         }
         stage('Compile C++') {
-            steps {
-                customImage.inside {
-                    sh 'g++ -o hello_cpp hello.cpp'
-                }
+             steps {
+                 sh 'g++ -o hello_cpp hello.cpp'
             }
         }
         stage('Run C') {
              steps {
-                 customImage.inside {
-                     sh './hello_c'
-                 }
+                 sh './hello_c'
             }
         }
         stage('Run C++') {
              steps {
-                customImage.inside {
-                    sh './hello_cpp'
-                }
+                sh './hello_cpp'
             }
         }
         stage('Run Python 3.10') {
              steps {
-                 customImage.inside {
-                     sh 'python3 hello.py'
-                 }
+                 sh 'python3 hello.py'
             }
         }
     }
