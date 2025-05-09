@@ -9,6 +9,7 @@ RUN apt-get update \
 COPY hello.c .
 COPY hello.cpp .
 COPY hello.py .
+COPY requirements.txt .
 
 # Install Commands
 RUN pip install -r requirements.txt
