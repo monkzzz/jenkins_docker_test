@@ -10,7 +10,10 @@ pipeline {
                 //Github
                 git branch: 'main', credentialsId: 'f8aa600a-341d-48d9-a579-d8774b5da13d', url: 'https://github.com/monkzzz/jenkins_docker_test'
                 //Bitbucket
-                //sh 'git pull https://${USERNAME}:${PASSWORD}@bitbucket.org/monkzzz/jenkins_docker_test.git board_fw'
+                //Use the credentials stored in jenkins
+                //withCredentials([usernamePassword(credentialsId: 'jenkins', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    //sh 'git pull https://${USERNAME}:${PASSWORD}@bitbucket.org/monkzzz/jenkins_docker_test.git board_fw'
+                //}
             }
         }
         // Prepare and build the Docker Image
