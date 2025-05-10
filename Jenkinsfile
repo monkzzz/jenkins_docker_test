@@ -7,54 +7,51 @@ pipeline {
         // Retrieve the project code from the repository.
         stage('SCM Checkout') {
             steps {
-               git branch: 'main', credentialsId: 'f8aa600a-341d-48d9-a579-d8774b5da13d', url: 'https://github.com/monkzzz/jenkins_docker_test'
+                //Github
+                git branch: 'main', credentialsId: 'f8aa600a-341d-48d9-a579-d8774b5da13d', url: 'https://github.com/monkzzz/jenkins_docker_test'
+                //Bitbucket
+                //sh 'git pull https://${USERNAME}:${PASSWORD}@bitbucket.org/monkzzz/jenkins_docker_test.git board_fw'
             }
         }
         // Prepare and build the Docker Image
-        stage('Prepare') {
+        stage('Build Image') {
             steps {
                 script {
                     //Build the Docker Image
-                    sh 'docker build -t monkzz/test_repo:$BUILD_NUMBER .'
-
-                    //Create the container
-                    
+                    sh 'docker build -t monkzz/test_repo:{$BUILD_NUMBER} .'
                 }
             }
         }
         // Run tests
-        stage('Test') {
+        stage('Test Image') {
             steps {
                 script {
                     // Start Docker
-                    sh 'docker run monkzz/test_repo:${BUILD_NUMBER}'
+                    sh 'docker run --rm monkzz/test_repo:${BUILD_NUMBER}'
                 }
             }
-         }
-        stage('Compile C') {
-             steps {
-                 sh 'gcc -o hello_c hello.c'
+        }
+    }
+
+    post {
+        failure {
+            emailext{
+                to: 'someone@email.com',
+                subject: '${JOB_NAME}.${BUILD_NUMBER} FAILED',
+                body: '${JOB_NAME}.${BUILD_NUMBER} FAILED',
+                mimeType: 'text/html'
             }
         }
-        stage('Compile C++') {
-             steps {
-                 sh 'g++ -o hello_cpp hello.cpp'
+        success {
+            emailext{
+                to: 'someone@email.com',
+                subject: '${JOB_NAME}.${BUILD_NUMBER} PASSED',
+                body: '${JOB_NAME}.${BUILD_NUMBER} PASSED',
+                mimeType: 'text/html'
             }
         }
-        stage('Run C') {
-             steps {
-                 sh './hello_c'
-            }
-        }
-        stage('Run C++') {
-             steps {
-                sh './hello_cpp'
-            }
-        }
-        stage('Run Python 3.10') {
-             steps {
-                 sh 'python3 hello.py'
-            }
-        }
+        //always {
+        //    sh 'docker stop app && docker rm app'
+        //}
     }
 }
