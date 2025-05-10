@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     //Build the Docker Image
-                    sh 'docker build -t monkzz/test_repo:{$BUILD_NUMBER} .'
+                    sh 'docker build -t monkzz/test_repo:$BUILD_NUMBER .'
                 }
             }
         }
@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     // Start Docker
-                    sh 'docker run --rm monkzz/test_repo:${BUILD_NUMBER}'
+                    sh 'docker run --rm monkzz/test_repo:$BUILD_NUMBER'
                 }
             }
         }
