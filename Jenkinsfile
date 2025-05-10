@@ -36,25 +36,25 @@ pipeline {
         }
     }
 
-    post {
-        failure {
-            emailext{
-                to: 'someone@email.com',
-                subject: '${JOB_NAME}.${BUILD_NUMBER} FAILED',
-                body: '${JOB_NAME}.${BUILD_NUMBER} FAILED',
-                mimeType: 'text/html'
-            }
-        }
-        success {
-            emailext{
-                to: 'someone@email.com',
-                subject: '${JOB_NAME}.${BUILD_NUMBER} PASSED',
-                body: '${JOB_NAME}.${BUILD_NUMBER} PASSED',
-                mimeType: 'text/html'
-            }
-        }
+    //post {
+    //    failure {
+    //        emailext{
+    //            to: 'someone@email.com',
+    //            subject: '${JOB_NAME}.${BUILD_NUMBER} FAILED',
+    //            body: '${JOB_NAME}.${BUILD_NUMBER} FAILED',
+    //            mimeType: 'text/html'
+    //        }
+    //    }
+    //    success {
+    //        emailext{
+    //            to: 'someone@email.com',
+    //            subject: '${JOB_NAME}.${BUILD_NUMBER} PASSED',
+    //            body: '${JOB_NAME}.${BUILD_NUMBER} PASSED',
+    //            mimeType: 'text/html'
+    //        }
+    //    }
         //always {
         //    sh 'docker stop app && docker rm app'
         //}
-    }
+    //}
 }
