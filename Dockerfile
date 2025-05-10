@@ -1,17 +1,28 @@
 FROM python:3.10
-WORKDIR /usr/src
-# Start Commands
+
+LABEL version = "0.1"
+LABEL author = ""
+LABEL description = "Build image"
+
+# Set working directory in the container
+WORKDIR /app
+
+# Install Image dependencies
 RUN apt-get update \
-    && apt-get install -y git build-essential \
-    && /usr/local/bin/python -m pip install --upgrade pip
+    && apt-get install -y git \
+    build-essential \
+    curl \
+    wget \
+    pip
 
-# Copy the files
-COPY hello.c .
-COPY hello.cpp .
-COPY hello.py .
-COPY requirements.txt .
+# Copy the relevent folders/files into the container
+COPY hello.c /app/
+COPY hello.cpp /app/
+COPY hello.py /app/
+COPY requirements.txt /app/
 
-# Install Commands
-RUN pip install -r requirements.txt
+# Install any needed dependencies specified in requirements.txt
+#RUN pip install --no-cache-dir -r requirements.txt
 
-# Last Commands
+# Run script
+CMD [ "python", "hello.py" ]
